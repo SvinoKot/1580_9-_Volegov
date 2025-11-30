@@ -3,26 +3,65 @@ pm=''
 vr=""
 s=input()
 c=[]
-if len(s)==5 or len(s)==4:
+danger=False
+do=""
+if len(s)==5:
+    for i in range(len(s)):
+        if i==2:
+            if s[2]!=":" and s[2]!=" ":
+                danger=True
+        else:
+            if not s[i].isdigit():
+                danger=True
+elif len(s)==3:
+    for i in range(len(s)):
+        if i==1:
+            if s[1]!=":" and s[1]!=" ":
+                danger=True
+        else:
+            if not s[i].isdigit():
+                danger=True   
+elif len(s)==4:
+    for i in range(len(s)):
+        if s[1].isdigit():
+            do=False
+        elif s[1]==" " or s[1]==":":
+            do=True
+        else:
+            danger=True
+        if do==True:
+            if i!=1 and not s[1].isdigit():
+                danger=True
+        else:
+            if i==2:
+                if s[2]!=":" and s[2]!=" ":
+                    danger=True
+            else:
+                if not s[i].isdigit():
+                    danger=True
+s=s.replace(":", " ")            
+if (len(s)==5 or len(s)==4 or len(s)==3) and danger==False:
     for x in s.split():
         c.append(int(x))
     h=c[0]
     m=c[1]
-    if h>23 or h<0 or m>59 or m<0:
-        print("неправильный ввод")
+    if h>23 or h<0:
+        print("Введены некорректные данные, часы должны быть от 0 до 23 включительно")
+    elif m>59 or m<0:
+        print("Введены некорректные данные, минуты должны быть от 0 до 59 включительно")
     else:
         if h==12 and m==0:
             print("полдень")
         elif h==0 and m==0:
             print("полночь")
         else:
-            if h%10==1:
+            if h%12==1:
                 ph=str((h-1)%12+1)+" час "
-            elif h%10>1 and h%10<5:
+            elif h%12>1 and h%12<5:
                 ph=str((h-1)%12+1)+" часа "
             else:
                 ph=str((h-1)%12+1)+" часов "
-            if m%10==0:
+            if m==0:
                 pm=" ровно "
             elif m%10==1 and m//10!=1:
                 pm=str(m)+" минута "
@@ -39,3 +78,5 @@ if len(s)==5 or len(s)==4:
             else:
                 vr="вечера"
         print(ph+pm+vr)
+else:
+    print("Введены некорректные данные, данные должны быть в формате: <число от 0 до 23> <пробел или двоеточие> <число от 0 до 59>")
