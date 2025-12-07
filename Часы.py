@@ -1,12 +1,12 @@
 #Проверка правилности ввода в зависимости от длины
-#Усли ввод неверный
+#Если ввод неверный
 #    Запоминаем это
 #Иначе
-#    идем дальше
+#    Идем дальше
 #Если длина неверная или при верной длине неверный ввод
 #    Выводим сообщение об ошибке
 #Иначе
-#    Идем далише
+#    Идем дальше
 #Разбиваем ввод на часы и минуты, проверяя верность значений
 #    Если часы больше 23 или меньше 0 или минуты больше 59 или меньше 0
 #        Выводим ошибку
@@ -25,93 +25,93 @@
 #                Часа или минуты
 #        Определяем часть суток
 #            Если часы делить на 6 == 0, 1, 2 или 3
-#                запоминаем время суток как ночь, утро, день или вечер
+#                Запоминаем время суток как ночь, утро, день или вечер
 #    Если колво минут не == 0
 #        Выводим часы и минуты, с правильным склонением, и часть суток
 #    Иначе
 #        Выводим часы, с правильным склонением, часть суток и "ровно"
-ph=''
-pm=''    
-vr=""
-s=input("Введите время: ")
-c=[]
+printHours=''
+printMinute=''    
+time=""
+string=input("Введите время: ")
+emptyList=[]
 danger=False
-do=""
-if len(s)==5:
-    for i in range(len(s)):
+isSpaceBefore=""
+if len(string)==5:
+    for i in range(len(string)):
         if i==2:
-            if s[2]!=":" and s[2]!=" ":
+            if string[2]!=":" and string[2]!=" ":
                 danger=True
         else:
-            if not s[i].isdigit():
+            if not string[i].isdigit():
                 danger=True
-elif len(s)==3:
-    for i in range(len(s)):
+elif len(string)==3:
+    for i in range(len(string)):
         if i==1:
-            if s[1]!=":" and s[1]!=" ":
+            if string[1]!=":" and string[1]!=" ":
                 danger=True
         else:
-            if not s[i].isdigit():
+            if not string[i].isdigit():
                 danger=True   
-elif len(s)==4:
-    for i in range(len(s)):
-        if s[1].isdigit():
-            do=False
-        elif s[1]==" " or s[1]==":":
-            do=True
+elif len(string)==4:
+    for i in range(len(string)):
+        if string[1].isdigit():
+            isSpaceBefore=False
+        elif string[1]==" " or string[1]==":":
+            isSpaceBefore=True
         else:
             danger=True
-        if do==True:
-            if i!=1 and not s[i].isdigit():
+        if isSpaceBefore==True:
+            if i!=1 and not string[i].isdigit():
                 danger=True
         else:
             if i==2:
-                if s[2]!=":" and s[2]!=" ":
+                if string[2]!=":" and string[2]!=" ":
                     danger=True
             else:
-                if not s[i].isdigit():
+                if not string[i].isdigit():
                     danger=True
-s=s.replace(":", " ")            
-if (len(s)==5 or len(s)==4 or len(s)==3) and danger==False:
-    for x in s.split():
-        c.append(int(x))
-    h=c[0]
-    m=c[1]
-    if h>23 or h<0:
+string=string.replace(":", " ")            
+if (len(string)==5 or len(string)==4 or len(string)==3) and danger==False:
+    for x in string.split():
+        emptyList.append(int(x))
+    hours=emptyList[0]
+    minutes=emptyList[1]
+    if hours>23 or hours<0:
         print("Введены некорректные данные, часы должны быть от 0 до 23 включительно")
-    elif m>59 or m<0:
+    elif minutes>59 or minutes<0:
         print("Введены некорректные данные, минуты должны быть от 0 до 59 включительно")
     else:
-        if h==12 and m==0:
+        if hours==12 and minutes==0:
             print("полдень")
-        elif h==0 and m==0:
+        elif hours==0 and minutes==0:
             print("полночь")
         else:
-            if h%12==1:
-                ph=str((h-1)%12+1)+" час "
-            elif h%12>1 and h%12<5:
-                ph=str((h-1)%12+1)+" часа "
+            if hours%12==1:
+                printHours=str((hours-1)%12+1)+" час "
+            elif hours%12>1 and hours%12<5:
+                printHours=str((hours-1)%12+1)+" часа "
             else:
-                ph=str((h-1)%12+1)+" часов "
-            if m==0:
-                pm=" ровно"
-            elif m%10==1 and m//10!=1:
-                pm=str(m)+" минута "
-            elif m%10>1 and m%10<5 and m//10!=1:
-                pm=str(m)+" минуты "
+                printHours=str((hours-1)%12+1)+" часов "
+            if minutes==0:
+                printMinute=" ровно"
+            elif minutes%10==1 and minutes//10!=1:
+                printMinute=str(minutes)+" минута "
+            elif minutes%10>1 and minutes%10<5 and minutes//10!=1:
+                printMinute=str(minutes)+" минуты "
             else:
-                pm=str(m)+" минут "
-            if h//6==0:
-                vr="ночи"
-            elif h//6==1:
-                vr="утра"
-            elif h//6==2:
-                vr="дня"
+                printMinute=str(minutes)+" минут "
+            if hours//6==0:
+                time="ночи"
+            elif hours//6==1:
+                time="утра"
+            elif hours//6==2:
+                time="дня"
             else:
-                vr="вечера"
-        if pm==" ровно":
-            print(ph+vr+pm)
+                time="вечера"
+        if printMinute==" ровно":
+            print(printHours+time+printMinute)
         else:
-            print(ph+pm+vr)
+            print(printHours+printMinute+time)
 else:
     print("Введены некорректные данные, данные должны быть в формате: <число от 0 до 23> <пробел или двоеточие> <число от 0 до 59>")
