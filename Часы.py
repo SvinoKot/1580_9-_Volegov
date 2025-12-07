@@ -61,20 +61,16 @@ elif len(s)==4:
             do=True
         else:
             danger=True
-            print(1)
         if do==True:
             if i!=1 and not s[i].isdigit():
                 danger=True
-                print(2)
         else:
             if i==2:
                 if s[2]!=":" and s[2]!=" ":
                     danger=True
-                    print(3)
             else:
                 if not s[i].isdigit():
                     danger=True
-                    print(4)
 s=s.replace(":", " ")            
 if (len(s)==5 or len(s)==4 or len(s)==3) and danger==False:
     for x in s.split():
@@ -119,4 +115,3 @@ if (len(s)==5 or len(s)==4 or len(s)==3) and danger==False:
             print(ph+pm+vr)
 else:
     print("Введены некорректные данные, данные должны быть в формате: <число от 0 до 23> <пробел или двоеточие> <число от 0 до 59>")
-    print(do)
