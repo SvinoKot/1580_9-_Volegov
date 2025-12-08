@@ -30,53 +30,93 @@
 #        Выводим часы и минуты, с правильным склонением, и часть суток
 #    Иначе
 #        Выводим часы, с правильным склонением, часть суток и "ровно"
-printHours=''
-printMinute=''    
-time=""
-string=input("Введите время: ")
-emptyList=[]
-danger=False
-isSpaceBefore=""
-if len(string)==5:
-    for i in range(len(string)):
-        if i==2:
-            if string[2]!=":" and string[2]!=" ":
-                danger=True
-        else:
-            if not string[i].isdigit():
-                danger=True
-elif len(string)==3:
-    for i in range(len(string)):
-        if i==1:
-            if string[1]!=":" and string[1]!=" ":
-                danger=True
-        else:
-            if not string[i].isdigit():
-                danger=True   
-elif len(string)==4:
-    for i in range(len(string)):
-        if string[1].isdigit():
-            isSpaceBefore=False
-        elif string[1]==" " or string[1]==":":
-            isSpaceBefore=True
-        else:
-            danger=True
-        if isSpaceBefore==True:
-            if i!=1 and not string[i].isdigit():
-                danger=True
-        else:
+def antiError(string):
+    danger=False
+    isSpaceBefore=""
+    if len(string)==5:
+        for i in range(len(string)):
             if i==2:
                 if string[2]!=":" and string[2]!=" ":
                     danger=True
             else:
                 if not string[i].isdigit():
                     danger=True
-string=string.replace(":", " ")            
+    elif len(string)==3:
+        for i in range(len(string)):
+            if i==1:
+                if string[1]!=":" and string[1]!=" ":
+                    danger=True
+            else:
+                if not string[i].isdigit():
+                    danger=True
+    elif len(string)==4:
+        for i in range(len(string)):
+            if string[1].isdigit():
+                isSpaceBefore=False
+            elif string[1]==" " or string[1]==":":
+                isSpaceBefore=True
+            else:
+                danger=True
+            if isSpaceBefore==True:
+                if i!=1 and not string[i].isdigit():
+                    danger=True
+            elif isSpaceBefore==False:
+                if i==2:
+                    if string[2]!=":" and string[2]!=" ":
+                        danger=True
+                else:
+                    if not string[i].isdigit():
+                        danger=True
+    return(danger)
+
+def timeIdentification(hours, minutes):
+    printHours=""
+    printMinute=""
+    time=""
+    
+    if hours%12==1:
+        printHours=str((hours-1)%12+1)+" час "
+    elif hours%12>1 and hours%12<5:
+        printHours=str((hours-1)%12+1)+" часа "
+    else:
+        printHours=str((hours-1)%12+1)+" часов "
+    
+    if minutes==0:
+        printMinute=" ровно"
+    elif minutes%10==1 and minutes//10!=1:
+        printMinute=str(minutes)+" минута "
+    elif minutes%10>1 and minutes%10<5 and minutes//10!=1:
+        printMinute=str(minutes)+" минуты "
+    else:
+        printMinute=str(minutes)+" минут "
+    
+    if hours//6==0:
+        time="ночи"
+    elif hours//6==1:
+        time="утра"
+    elif hours//6==2:
+        time="дня"
+    else:
+        time="вечера"
+    
+    if printMinute==" ровно":
+        return(printHours+time+printMinute)
+    else:
+        return(printHours+printMinute+time)
+
+string=input("Введите время: ")
+emptyList=[]
+
+danger=antiError(string)
+
+string=string.replace(":", " ")
+
 if (len(string)==5 or len(string)==4 or len(string)==3) and danger==False:
     for x in string.split():
         emptyList.append(int(x))
     hours=emptyList[0]
     minutes=emptyList[1]
+    
     if hours>23 or hours<0:
         print("Введены некорректные данные, часы должны быть от 0 до 23 включительно")
     elif minutes>59 or minutes<0:
@@ -87,31 +127,7 @@ if (len(string)==5 or len(string)==4 or len(string)==3) and danger==False:
         elif hours==0 and minutes==0:
             print("полночь")
         else:
-            if hours%12==1:
-                printHours=str((hours-1)%12+1)+" час "
-            elif hours%12>1 and hours%12<5:
-                printHours=str((hours-1)%12+1)+" часа "
-            else:
-                printHours=str((hours-1)%12+1)+" часов "
-            if minutes==0:
-                printMinute=" ровно"
-            elif minutes%10==1 and minutes//10!=1:
-                printMinute=str(minutes)+" минута "
-            elif minutes%10>1 and minutes%10<5 and minutes//10!=1:
-                printMinute=str(minutes)+" минуты "
-            else:
-                printMinute=str(minutes)+" минут "
-            if hours//6==0:
-                time="ночи"
-            elif hours//6==1:
-                time="утра"
-            elif hours//6==2:
-                time="дня"
-            else:
-                time="вечера"
-        if printMinute==" ровно":
-            print(printHours+time+printMinute)
-        else:
-            print(printHours+printMinute+time)
+            printing=timeIdentification(hours, minutes)
+            print(printing)
 else:
     print("Введены некорректные данные, данные должны быть в формате: <число от 0 до 23> <пробел или двоеточие> <число от 0 до 59>")
