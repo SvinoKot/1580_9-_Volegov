@@ -69,7 +69,7 @@ def antiError(string):
                         danger=True
     return(danger)
 
-def timeIdentification(hours, minutes):
+def timeIdentification(hours, minutes, tipe):
     printHours=""
     printMinute=""
     time=""
@@ -98,13 +98,34 @@ def timeIdentification(hours, minutes):
         time="дня"
     else:
         time="вечера"
-    
-    if printMinute==" ровно":
-        return(printHours+time+printMinute)
+
+    if hours//12==1:
+        time2="pm"
     else:
-        return(printHours+printMinute+time)
+        time2="am"
+    if hours==0 or hours==12:
+        printHours2="12"
+    elif hours%12<10:
+        printHours2="0"+str(hours%12)
+    else:
+        printHours2=str(hours%12)
+    
+    if minutes<10:
+        printMinutes2="0"+str(minutes)
+    else:
+        printMinutes2=str(minutes)
+    if tipe=="1":
+        if printMinute==" ровно":
+            return(printHours+time+printMinute)
+        else:
+            return(printHours+printMinute+time)
+    elif tipe=="2":
+        return(printHours2 + ":" + printMinutes2 + " " + time2)
 
 string=input("Введите время: ")
+tipe=input("Введите номер формата времени, разговорный или двенадцатичасовой (введите число 1 или 2): ")
+if tipe!="1" and tipe!="2":
+    print("Неправильный ввод формата времени")
 emptyList=[]
 
 danger=antiError(string)
@@ -122,12 +143,12 @@ if (len(string)==5 or len(string)==4 or len(string)==3) and danger==False:
     elif minutes>59 or minutes<0:
         print("Введены некорректные данные, минуты должны быть от 0 до 59 включительно")
     else:
-        if hours==12 and minutes==0:
+        if hours==12 and minutes==0 and tipe==1:
             print("полдень")
-        elif hours==0 and minutes==0:
+        elif hours==0 and minutes==0 and tipe==1:
             print("полночь")
         else:
-            printing=timeIdentification(hours, minutes)
+            printing=timeIdentification(hours, minutes, tipe)
             print(printing)
 else:
     print("Введены некорректные данные, данные должны быть в формате: <число от 0 до 23> <пробел или двоеточие> <число от 0 до 59>")
