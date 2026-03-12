@@ -99,9 +99,9 @@ if test=="нет":
         startStringList=input("Введите числа через пробел: ")
         for x in startStringList.split():
             startList.append(int(x))
-            if len(startList)!=lenth:
-                danger=True
-                print("Неверное количество чисел")
+        if len(startList)!=lenth:
+            danger=True
+            print("Неверное количество чисел")
     elif isListRandom=="да" and danger!=True:
         startList = [random.randint(0, 99) for _ in range(lenth)]
         print("Сгенерированный список:", *startList)
