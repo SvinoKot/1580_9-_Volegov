@@ -66,7 +66,7 @@ def sortVibor(List):
         comparisons+=1
         if List[i]!=min(List[i:]):
             temporaryVariable=min(List[i:])
-            List.remove(min(List[i:]))
+            del List[List[i:].index(min(List[i:]))+i]
             List.insert(i, temporaryVariable)
             movings+=1
     print("Сортировка выбором результат:", *List, "Перестановок:", movings, "Сравнений:", comparisons)
