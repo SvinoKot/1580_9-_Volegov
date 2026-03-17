@@ -110,7 +110,7 @@ if test=="нет":
             danger=True    
         while isWantToChange=="да" and danger!=True:
             i=int(input("Введите номер изменяемого элемента: "))
-            startList[i-1]==int(input("Ведите число: "))
+            startList[i-1]=int(input("Ведите число: "))
             print("Список:", *startList)
             isWantToChange=input("Хотите изменить список? Напишите \"да\" или \"нет\": ")
     else:
