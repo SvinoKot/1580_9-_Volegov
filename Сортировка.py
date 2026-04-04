@@ -48,6 +48,16 @@ import random
     иначе 
         выводим ошибку
 '''
+def mini(list):
+    Comparisons=0
+    Movings=0
+    minim=list[0]
+    for i in range(len(list)-1):
+        Comparisons+=1
+        if list[i+1]<minim:
+            minim=list[i+1]
+            Movings+=1
+    return [minim, Comparisons, Movings]
 def sortPuzir(List):
     movings=0
     comparisons=0
@@ -64,9 +74,9 @@ def sortVibor(List):
     comparisons=0
     for i in range(len(List)):
         comparisons+=1
-        if List[i]!=min(List[i:]):
-            temporaryVariable=min(List[i:])
-            del List[List[i:].index(min(List[i:]))+i]
+        temporaryVariable, comparisons, movings=mini(List[i:])[0], mini(List[i:])[1]+comparisons, mini(List[i:])[2]+movings
+        if List[i]!=temporaryVariable:
+            del List[List[i:].index(temporaryVariable)+i]
             List.insert(i, temporaryVariable)
             movings+=1
     print("Сортировка выбором результат:", *List, "Перестановок:", movings, "Сравнений:", comparisons)
